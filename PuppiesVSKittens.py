@@ -21,9 +21,7 @@ def countAndSumThings(resultsSet, currentCounts):
         currentCounts[thing]+=thingCount
     return currentCounts
 
-i = 0
-
-while i <= 50:
+while True:
 
     if not 'totalThingsCounts' in locals(): 
         totalThingsCounts = {thingGroups[i]:0 for i in range(0,len(thingGroups))}
@@ -57,8 +55,15 @@ while i <= 50:
         sumThingGroupB = sum([totalThingsCounts[thing] for thing in thingGroupB])
 
         sumOfThings = sumThingGroupA + sumThingGroupB
+
+        if (sumOfThings == 0): sumOfThings = 1 # Temporarily deal with cases where there are no things
         redIntensity = sumThingGroupA/sumOfThings
         greenIntensity = sumThingGroupB/sumOfThings
+
+        # Reset the counts at midnight
+        if previousHour > datetime.datetime.now().hour:
+            sumThingGroupA = sumThingGroupB = redIntensity = greenIntensity = 0
+            totalThingsCounts = {thingGroups[i]:0 for i in range(0,len(thingGroups))}
 
     # Lighting management
     # GPIO.setup(12, GPIO.OUT) ## Setup GPIO pin 12 to OUT
