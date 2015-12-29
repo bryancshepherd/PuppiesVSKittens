@@ -61,6 +61,8 @@ while True:
         greenIntensity = sumThingGroupB/sumOfThings
 
         # Reset the counts at midnight
+        if not 'previousHour' in locals(): previousHour = 0
+        
         if previousHour > datetime.datetime.now().hour:
             sumThingGroupA = sumThingGroupB = redIntensity = greenIntensity = 0
             totalThingsCounts = {thingGroups[i]:0 for i in range(0,len(thingGroups))}
@@ -74,7 +76,6 @@ while True:
 
     
     # Temporary loop management
-    i += 1
     print('Working')
     print('sumThingGroupA (Dogs): ' + str(sumThingGroupA))
     print('sumThingGroupB (Cats): ' + str(sumThingGroupB))
