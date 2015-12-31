@@ -28,6 +28,29 @@ GPIO.setup(22, GPIO.OUT) ## Setup GPIO pin 22 to OUT
 pR = GPIO.PWM(22, 100)
 pR.start(0)
 
+# Test light dimming and relative brightnesses
+# testLights = True
+#
+# if testLights == True:
+#     i = 0
+#     while True:
+#         try:
+#             if (i == 100): direction = -1
+#             if (i == 1): direction = 1
+#             pR.ChangeDutyCycle(i*.2)
+#             pG.ChangeDutyCycle(100-i)
+#             i += direction
+#             time.sleep(.2)
+# 
+#         except KeyboardInterrupt:
+#             pG.stop()
+#             pR.stop()
+#             GPIO.cleanup()
+#             quit()
+
+    
+    
+
 # Assign terms to groups
 thingGroupA = red = ['kittens', 'kitty', 'cat']
 thingGroupB = green = ['puppies', 'puppy', 'dog']
@@ -81,9 +104,20 @@ while True:
 
             if sumOfThings == 0:
                 sumOfThings = 1 # Temporarily deal with cases where there are no things
-                
-            redIntensity = (sumThingGroupA/sumOfThings)*100
-            greenIntensity = (sumThingGroupB/sumOfThings)*100
+
+            # Determine the relative LED brightnesses based on the term frequencies
+            redIntensity = (sumThingGroupA/sumOfThings) * 100
+            greenIntensity = (sumThingGroupB/sumOfThings) * 100
+
+            # Red appears brighter because of how it is percieved by the eye,
+            # so decrease it to make the brightnesses seem more equal
+            # https://learn.sparkfun.com/tutorials/light/visible-light
+            # http://www.ledsmagazine.com/articles/print/volume-10/issue-6/features/understand-rgb-led-mixing-ratios-to-realize-optimal-color-in-signs-and-displays-magazine.html
+            # http://www.gizmology.net/LEDs.htm
+            # The differnece in level of brightness is more perceptable at lower levels.
+            # Therefore, square the intensity to change the brightness distribution. 
+            redIntensity = ((redIntensity**2)/10000) * 100 * .2
+            greenIntensity = ((greenIntensity**2)/10000) * 100
 
             # Reset the counts at midnight
             if 'previousHour' in locals():
@@ -118,6 +152,7 @@ while True:
         pG.stop()
         pR.stop()
         GPIO.cleanup()
+        quit()
 
 
 
