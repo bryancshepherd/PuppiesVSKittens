@@ -15,17 +15,17 @@ GPIO.setmode(GPIO.BCM) ## Use internal pin numbering
 
 # Initialize LEDs
 # Green light
-GPIO.setup(25, GPIO.OUT) ## Setup GPIO pin 25 to OUT
+GPIO.setup(22, GPIO.OUT) ## Setup GPIO pin 25 to OUT
 
 # Initialize Pulse width modulation on GPIO 25. Frequency=100Hz and OFF
-pG = GPIO.PWM(25, 100)
+pG = GPIO.PWM(22, 100)
 pG.start(0)
 
 # Red light
-GPIO.setup(22, GPIO.OUT) ## Setup GPIO pin 22 to OUT
+GPIO.setup(25, GPIO.OUT) ## Setup GPIO pin 22 to OUT
 
 # Initialize Pulse width modulation on GPIO 22. Frequency=100Hz and OFF
-pR = GPIO.PWM(22, 100)
+pR = GPIO.PWM(25, 100)
 pR.start(0)
 
 # Test light dimming and relative brightnesses
@@ -116,7 +116,7 @@ while True:
             # http://www.gizmology.net/LEDs.htm
             # The differnece in level of brightness is more perceptable at lower levels.
             # Therefore, square the intensity to change the brightness distribution. 
-            redIntensity = ((redIntensity**2)/10000) * 100 * .2
+            redIntensity = ((redIntensity**2)/10000) * 100 * .25
             greenIntensity = ((greenIntensity**2)/10000) * 100
 
             # Reset the counts at midnight
