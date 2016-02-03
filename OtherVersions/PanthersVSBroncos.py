@@ -59,8 +59,6 @@ while True:
 
             if sumOfThings == 0:
                 sumOfThings = 1 # Temporarily deal with cases where there are no things
-
-            totalThingsCounts = {thingGroups[i]:0 for i in range(0,len(thingGroups))}
         
         # Temporary loop management and output
         print('GroupA (Broncos): ' + str(sumThingGroupA))
